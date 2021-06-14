@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react'
 //Stylesheet imports
-import '../../../node_modules/font-awesome/css/font-awesome.min.css';
+import '../fontawesome-free/css/fontawesome.min.css';
 import './OrderItems.css'
 //Material UI imports
 import Typography from "@material-ui/core/Typography";
