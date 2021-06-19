@@ -1,5 +1,5 @@
 
-import { AppBar, Button, FormControl, FormHelperText, Grid, GridList, GridListTile, IconButton, Input, InputLabel, MenuItem, Select, Step, StepContent, StepLabel, Tabs, Typography } from "@material-ui/core";
+import { AppBar, Button, FormControl, FormControlLabel, FormHelperText, FormLabel, Grid, GridList, GridListTile, IconButton, Input, InputLabel, MenuItem, Radio, RadioGroup, Select, Step, StepContent, StepLabel, Tabs, Typography } from "@material-ui/core";
 import { Stepper } from "@material-ui/core";
 import Tab from "@material-ui/core/Tab";
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
@@ -197,6 +197,25 @@ class Checkout extends Component {
                   <Button style={{margin: 5}} className='button' variant="contained" color="primary"
                           onClick={this.incrementActiveStep}>Next</Button>
                 </div>
+              </StepContent>
+            </Step>
+            <Step key='Payment'>
+              <StepLabel>Payment</StepLabel>
+              <StepContent>
+                  <div id='payment-modes'>
+                      <FormControl>
+                          <FormLabel>Select Mode of Payment</FormLabel>
+                          <RadioGroup onChange={this.onPaymentSelection} value={this.state.paymentId}>
+                              {(this.state.payments || []).map((payment, index) => (
+                                  <FormControlLabel key={payment.id} value={payment.id} control={<Radio/>}
+                                                    label={payment.payment_name}/>
+                              ))}
+                          </RadioGroup>
+                      </FormControl>
+                  </div>
+                  <Button style={{margin: 5}} onClick={this.decrementActiveStep}>Back</Button>
+                  <Button style={{margin: 5}} variant="contained" color="primary"
+                          onClick={this.incrementActiveStep}>Finish</Button>
               </StepContent>
             </Step>
           </Stepper>
