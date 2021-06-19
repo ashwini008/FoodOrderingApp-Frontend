@@ -1,4 +1,5 @@
 
+import { Card, CardContent } from "@material-ui/core";
 import { AppBar, Button, FormControl, FormControlLabel, FormHelperText, FormLabel, Grid, GridList, GridListTile, IconButton, Input, InputLabel, MenuItem, Radio, RadioGroup, Select, Step, StepContent, StepLabel, Tabs, Typography } from "@material-ui/core";
 import { Stepper } from "@material-ui/core";
 import Tab from "@material-ui/core/Tab";
@@ -208,7 +209,7 @@ class Checkout extends Component {
                           <RadioGroup onChange={this.onPaymentSelection} value={this.state.paymentId}>
                               {(this.state.payments || []).map((payment, index) => (
                                   <FormControlLabel key={payment.id} value={payment.id} control={<Radio/>}
-                                                    label={payment.payment_name}/>
+                                  label={payment.payment_name}/>
                               ))}
                           </RadioGroup>
                       </FormControl>
@@ -219,7 +220,27 @@ class Checkout extends Component {
               </StepContent>
             </Step>
           </Stepper>
+          <div className={this.state.displayChange}>
+            <Typography style={{marginLeft: 40}} variant='h5'>
+                View the summary and place your order now!
+            </Typography>
+            <Button style={{marginLeft: 40, marginTop: 20}} onClick={this.resetActiveStep}>CHANGE</Button>
+          </div>
         </div>
+        <div className='summary-section'>
+          <Card variant='elevation' className='summary-card'>
+              <CardContent>
+                  <Typography variant="h5" component="h2">
+                      Summary
+                  </Typography>
+                  <br/>
+                  <Typography variant='h6' component='h3' color='textSecondary'
+                  style={{textTransform: "capitalize", marginBottom: 15}}>
+                    {/* {this.props.location.state.restaurantName} */}
+                  </Typography>
+              </CardContent>
+          </Card>
+      </div>
       </div>
     </Fragment>
   }
