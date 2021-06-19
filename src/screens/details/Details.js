@@ -60,7 +60,17 @@ const Details = props => {
   }
 
   const checkout = () => {
-
+    // check if cart is empty
+    if (!cartData.length) {
+      setNotiMsg("Please add an item to your cart!");
+      toggleNotification(true);
+    } else if (!true) { // check if user is logged in
+      setNotiMsg("Please login first!");
+      toggleNotification(true);
+    } else {
+      localStorage.cartData = JSON.stringify(cartData);
+      props.history.push('/checkout');
+    }
   }
 
   let totalAmount = 0;
