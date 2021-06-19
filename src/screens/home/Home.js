@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../home/Home.css";
 import PropTypes from "prop-types";
-import Header from "../../common/header/Header";
+// import Header from "../../common/header/Header";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -10,10 +10,12 @@ import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import withStyles from "@material-ui/core/es/styles/withStyles";
 import Grid from "@material-ui/core/Grid/Grid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const styles = {
   card: {
-    maxWidth: 285
+    maxWidth: 285,
+    marginBottom: '24px'
   },
   media: {
     height: 140
@@ -102,11 +104,11 @@ class Home extends Component {
     return (
       <div>
         <div>
-          <Header
+          {/* <Header
             {...this.props}
             onChange={this.searchChangeHandler}
             isHomePage={true}
-          />
+          /> */}
         </div>
         <Grid
           container
@@ -143,7 +145,8 @@ class Home extends Component {
                 </CardActionArea>
                 <CardActions className="action-container">
                   <div className="customer-rating">
-                    <i className="fa fa-star" aria-hidden="true" />
+                    <FontAwesomeIcon icon="star" size="xs" />
+                    {/* <i className="fa fa-star" aria-hidden="true" /> */}
                     <span>
                       {" "}
                       {restaurant.customer_rating} (
@@ -151,9 +154,10 @@ class Home extends Component {
                     </span>
                   </div>
                   <div className="customer-price">
-                    <i className="fas fa-rupee-sign">
+                    <FontAwesomeIcon icon="rupee-sign" size="xs" />
+                    {/* <i className="fas fa-rupee-sign"> */}
                       <span> {restaurant.average_price} for two</span>{" "}
-                    </i>
+                    {/* </i> */}
                   </div>
                 </CardActions>
               </Card>
