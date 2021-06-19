@@ -25,6 +25,10 @@
   padding: 16px;
 }
 
+.cart-header {
+  margin-bottom: 16px!important;
+}
+
 .amount {
   display: flex;
   justify-content: space-between ;

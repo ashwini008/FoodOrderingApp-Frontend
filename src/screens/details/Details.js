@@ -33,7 +33,7 @@ const Details = props => {
       } else {
         state.push({...data, qty: 1})
       }
-      return state;
+      return [...state];
     });
     setNotiMsg("Item added to cart!");
     toggleNotification(true);
@@ -53,7 +53,7 @@ const Details = props => {
         isRemoved = true;
       }
 
-      return state;
+      return [...state];
     });
     setNotiMsg(isInc ? 'Item quantity increased by 1!' : isRemoved ? 'Item removed from cart!' : 'Item quantity decreased by 1!');
     toggleNotification(true);
@@ -79,7 +79,7 @@ const Details = props => {
     <>
       <Grid container className="restaurant-info">
         <Grid item md={3} sm={12} xs={12}>
-          <img src={restaurantDetails.photo_URL} />
+          <img src={restaurantDetails.photo_URL} alt="restaurant-img" />
         </Grid>
         <Grid item md={9} sm={12} xs={12}>
           <Grid container direction="column">
@@ -112,7 +112,7 @@ const Details = props => {
         <Grid item md={6} sm={12} xs={12}>
           {
             restaurantDetails?.categories?.map(item => (
-              <div className="item-group">
+              <div className="item-group" key={item.id}>
                 <Typography variant="body1" gutterBottom className="category-name">{item.category_name}</Typography>
                 <Divider />
                 {
@@ -139,7 +139,7 @@ const Details = props => {
         </Grid>
         <Grid item md={6} sm={12} xs={12}>
           <Card variant={"outlined"} raised className="paper-root">
-            <Typography variant="h5">
+            <Typography variant="h5" className="cart-header">
               <Badge className="item-type" showZero badgeContent={cartData.length} color="primary">
                 <ShoppingCart />
               </Badge>
