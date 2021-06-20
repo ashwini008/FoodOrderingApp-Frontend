@@ -3,7 +3,7 @@ import React, {Component, Fragment} from 'react';
 import './Checkout.css'
 
 //Header component Import
-import Header from "../../common/header/Header";
+// import Header from "../../common/header/Header";
 
 //Material-Ui Imports
 import Stepper from '@material-ui/core/Stepper';
@@ -64,16 +64,18 @@ class Checkout extends Component {
             placeOrderMessage: undefined,
             placeOrderMessageOpen: false,
             couponId: undefined,
-            restaurantDetails: JSON.parse(localStorage.restaurantDetails),
-            cartData: JSON.parse(localStorage.cartData),
+            restaurantDetails: localStorage.restaurantDetails ? JSON.parse(localStorage.restaurantDetails) : {},
+            cartData: localStorage.cartData ? JSON.parse(localStorage.cartData) : [],
         }
     }
 
     componentDidMount() {
-        if (this.props.location.state !== '' && sessionStorage.getItem('access-token') !== null) {
+        if (sessionStorage.getItem('access-token')) {
             this.fetchAddress();
             this.fetchStates();
             this.fetchPayments();
+        } else {
+          this.props.history.push('/')
         }
     }
 
@@ -201,7 +203,7 @@ class Checkout extends Component {
             }
         });
 
-        let url = this.props.baseUrl + 'address/customer';
+        let url = 'http://localhost:8080/api/address/customer';
 
         xhr.open('GET', url);
 
@@ -226,7 +228,7 @@ class Checkout extends Component {
             }
         });
 
-        let url = this.props.baseUrl + 'states/';
+        let url = 'http://localhost:8080/api/states';
 
         xhr.open('GET', url);
 
@@ -250,7 +252,7 @@ class Checkout extends Component {
             }
         });
 
-        let url = this.props.baseUrl + 'payment';
+        let url = 'http://localhost:8080/api/payment';
 
         xhr.open('GET', url);
 
@@ -326,7 +328,7 @@ class Checkout extends Component {
             }
         });
 
-        let url = this.props.baseUrl + 'address/';
+        let url = 'http://localhost:8080/api/address';
 
         xhr.open('POST', url);
 
@@ -348,18 +350,19 @@ class Checkout extends Component {
           })
           return;
       }
-      let bill = this.props.location.state.total;
+      
+      let bill = 0;
+      this.state.cartData.forEach(item => bill += item.qty * item.price);
       let itemQuantities = [];
-      this.props.location.state.orderItems.items.map((item, index) => (
-          itemQuantities.push({item_id: item.id, price: item.quantity * item.pricePerItem, quantity: item.quantity})
+      this.state.cartData.map((item, index) => (
+          itemQuantities.push({item_id: item.id, price: item.qty * item.price, quantity: item.qty})
       ))
       let order = {
           address_id: this.state.selectedAddressId,
           coupon_id: this.state.couponId,
           item_quantities: itemQuantities,
           payment_id: this.state.paymentId,
-          restaurant_id: this.props.location.state.orderItems.id,
-          
+          restaurant_id: this.state.restaurantDetails.id,
           bill: bill,
           discount: 0
       }
@@ -389,7 +392,7 @@ class Checkout extends Component {
           }
       );
 
-      let url = this.props.baseUrl + 'order';
+      let url = 'http://localhost:8080/api/order';
 
       xhr.open('POST', url);
 
@@ -405,7 +408,7 @@ class Checkout extends Component {
         //     return <Redirect to='/'/>
         // }
         return <Fragment>
-            <Header baseUrl={this.props.baseUrl}></Header>
+            {/* <Header baseUrl={this.props.baseUrl}></Header> */}
             <div className='main-container'>
                 <div className='delivery-payment-section'>
                     <Stepper activeStep={this.state.activeStep} orientation='vertical'>
@@ -569,10 +572,12 @@ class Checkout extends Component {
                             <Typography variant='h6' component='h3' color='textSecondary'
                                         style={{textTransform: "capitalize", marginBottom: 15}}>
                                 {/* {this.props.location.state.restaurantDetails.restaurantName} */}
-                                {this.state.restaurantDetails?.restaurantName}
+                                {this.state.restaurantDetails?.restaurant_name}
                             </Typography>
-                            <OrderItems divider='true' orderitems={JSON.parse(localStorage.cartData)}
-                                        total={this.props.location.state.total} placeOrder={this.placeOrder}/>
+                            {
+                            this.state.cartData.length && <OrderItems divider='true' orderitems={this.state.cartData} placeOrder={this.placeOrder}/>
+                            }
+
                         </CardContent>
                     </Card>
                 </div>
