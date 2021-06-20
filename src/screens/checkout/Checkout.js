@@ -62,7 +62,7 @@ class Checkout extends Component {
             displayChange: 'display-none',
             placeOrderMessage: undefined,
             placeOrderMessageOpen: false,
-            couponId: undefined,
+            couponId: null,
             restaurantDetails: localStorage.restaurantDetails ? JSON.parse(localStorage.restaurantDetails) : {},
             cartData: localStorage.cartData ? JSON.parse(localStorage.cartData) : [],
         }

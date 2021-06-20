@@ -19,7 +19,7 @@ export default function OrderItems(props) {
                 <Grid key={item.id} container>
                     <Grid item xs={1}>
                         
-                        <FontAwesomeIcon icon={["far", "stop-circle"]} className={item.type === 'VEG'?{color:"green"} : {color: "red"}} />
+                        <FontAwesomeIcon icon={["far", "stop-circle"]} style={item.type === 'VEG'?{color:"green"} : {color: "red"}} />
                     </Grid>
                     <Grid item xs={6}>
                         <Typography color='textSecondary' style={{textTransform: "capitalize"}}>
