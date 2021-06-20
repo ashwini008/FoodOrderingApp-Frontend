@@ -2,7 +2,6 @@
 .header-main-container {
   background-color: #263238;
   padding: 16px;
-  margin-bottom: 16px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -108,6 +107,12 @@ width:8px !important;
     align-self: center;
   }
 
+}
+
+@media only screen and (max-width: 480px){
+  .header-search-container {
+    width: 100% !important;
+  }
 }
 /*Styling for display on smaller screen ends here*/
 /*Css styling for Header ends here*/
