@@ -2,7 +2,6 @@
 .header-main-container {
   background-color: #263238;
   padding: 16px;
-  margin-bottom: 16px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -87,7 +86,7 @@ width:8px !important;
 }
 
 /*Styling for display on smaller screen*/
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 767px) {
   .header-main-container {
     background-color: #263238;
     display: flex;
@@ -102,8 +101,18 @@ width:8px !important;
   .header-logo-container, .header-search-container, .header-upload-btn-container, .header-profile-btn-container {
     align-self: flex-start;
     padding-left: 8px;
+  }
+  .search-icon {
+    padding: 0 0px;
+    align-self: center;
+  }
+
 }
 
+@media only screen and (max-width: 480px){
+  .header-search-container {
+    width: 100% !important;
+  }
 }
 /*Styling for display on smaller screen ends here*/
 /*Css styling for Header ends here*/
