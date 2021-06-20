@@ -65,7 +65,7 @@ const Details = props => {
     if (!cartData.length) {
       setNotiMsg("Please add an item to your cart!");
       toggleNotification(true);
-    } else if (!true) { // check if user is logged in
+    } else if (!sessionStorage.getItem('access-token')) { // check if user is logged in
       setNotiMsg("Please login first!");
       toggleNotification(true);
     } else {
