@@ -175,21 +175,11 @@ class Header extends Component {
     xhrLogin.send(dataLogin);
 
   }
-  /*
-  checkForm = () => {
-    this.state.email === "" ? this.setState({ emailRequired: "dispBlock" }) : this.setState({ emailRequired: "dispNone" });
-    this.state.firstname === "" ? this.setState({ firstnameRequired: "dispBlock" }) : this.setState({ firstnameRequired: "dispNone" });
-    this.state.lastname === "" ? this.setState({ lastnameRequired: "dispBlock" }) : this.setState({ lastnameRequired: "dispNone" });
-    this.state.mobile === "" ? this.setState({ mobileRequired: "dispBlock" }) : this.setState({ mobileRequired: "dispNone" });
-    this.state.passwordReg === "" ? this.setState({ passwordRegRequired: "dispBlock" }) : this.setState({ passwordRegRequired: "dispNone" });
-    if (this.state.email === "" || this.state.firstname === "" || this.state.lastname === "" || this.state.mobile === "" || this.state.passwordReg === "") { return; }
-  }*/
 
   //Sign up function
   signUpClickHandler = () => {
     //clear error messages
-    this.setState({ signUpErrorMsg: "" });
-    this.setState({ signUpErrCode: "" });
+    this.setState({ signUpErrorMsg: "" , signUpErrCode: "" });
     //Checking if any input fields are empty
     this.state.email === "" ? this.setState({ emailRequired: "dispBlock" }) : this.setState({ emailRequired: "dispNone" });
     this.state.firstname === "" ? this.setState({ firstnameRequired: "dispBlock" }) : this.setState({ firstnameRequired: "dispNone" });
@@ -198,15 +188,6 @@ class Header extends Component {
     if (this.state.email === "" || this.state.firstname === "" || this.state.mobile === "" || this.state.passwordReg === "") { return; }
 
     let that = this;
-    /*
-       let dataSignUp = JSON.stringify({
-       "firstName="+ this.state.firstname+
-       "&lastName="+ this.state.lastname+
-       "&emailAddress="+ this.state.email+
-         "&contactNumber="+ this.state.mobile+
-         "&password="+ this.state.passwordReg;
-       });
-   */
     let dataSignup = {
       'first_name': this.state.firstname,
       'last_name': this.state.lastname,
@@ -247,42 +228,19 @@ class Header extends Component {
   openModalHandler = () => {
 
     //Clearing input field values and all error texts when freshly opening the modal
-    this.setState({ modalIsOpen: true });
-    this.setState({ value: 0 });
-    this.setState({ email: "" });
-    this.setState({ firstname: "" });
-    this.setState({ lastname: "" });
-    this.setState({ mobile: "" });
-    this.setState({ signUpErrorMsg: "" });
-    this.setState({ signUpErrCode: "" });
-    this.setState({ passwordReg: "" });
-    this.setState({ loginInvalidContactNo: "" });
-    this.setState({ loginErrCode: "" });
-    this.setState({ loginErrorMsg: "" });
-    this.setState({ usernameRequired: "dispNone" });
-    this.setState({ passwordRequired: "dispNone" });
-    this.setState({ loginError: "dispNone" });
-    this.setState({ signupError: "dispNone" });
-    this.setState({ emailRequired: "dispNone" });
-    this.setState({ firstnameRequired: "dispNone" });
-    this.setState({ lastnameRequired: "dispNone" });
-    this.setState({ mobileRequired: "dispNone" });
-    this.setState({ passwordRegRequired: "dispNone" });
-    this.setState({ loginErrorMsg: "" });
+    this.setState({ modalIsOpen: true,value: 0 , email: "" , firstname: "" , lastname: "" , mobile: "" , signUpErrorMsg: "" , signUpErrCode: "" , passwordReg: "" , loginInvalidContactNo: "" , loginErrCode: "" , loginErrorMsg: "" , usernameRequired: "dispNone" , passwordRequired: "dispNone" , loginError: "dispNone" , signupError: "dispNone" , emailRequired: "dispNone" , firstnameRequired: "dispNone" , lastnameRequired: "dispNone" , mobileRequired: "dispNone" , passwordRegRequired: "dispNone"  });
   }
 
   // Closing modal afer login
   // Opening snack bar with message
   closeModalHandler = () => {
-    this.setState({ modalIsOpen: false });
-    this.setState({ snackBarOpen: true });
+    this.setState({ modalIsOpen: false , snackBarOpen: true });
   }
 
   // Closing modal due to click away
   // This does trigger a snack bar
   closeModalHandlerClickAway = () => {
-    this.setState({ modalIsOpen: false });
-    this.setState({ snackBarOpen: false });
+    this.setState({ modalIsOpen: false , snackBarOpen: false });
   }
 
   // For toggling between Login and Signup tab in the modal
@@ -292,25 +250,18 @@ class Header extends Component {
 
   // Opening of snack bar and toggling to Login tab after successfull signup
   openMessageHandler = () => {
-    this.setState({ snackBarOpen: true });
-    this.setState({ modalIsOpen: true });
-    this.setState({ value: 0 });
+    this.setState({ snackBarOpen: true , modalIsOpen: true , value: 0 });
   }
 
   // Opening snack bar and closing modal after successful login
   openMessageHandlerPostLogin = () => {
-    this.setState({ snackBarOpen: true });
-    this.setState({ modalIsOpen: false });
-    this.setState({ value: 0 });
+    this.setState({ snackBarOpen: true , modalIsOpen: false , value: 0 });
   }
 
   // Opening menu that contains the profile and logout link
   openMenuHandler = (event) => {
     this.setState({
-      menuIsOpen: true,
-    });
-    this.setState({
-      anchorEl: event.currentTarget,
+      menuIsOpen: true, anchorEl: event.currentTarget,
     });
 
 

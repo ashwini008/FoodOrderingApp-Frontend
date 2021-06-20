@@ -94,11 +94,15 @@ width:8px !important;
     flex-wrap: wrap;
     gap: 10px;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
   }
   .menuDrop{
     margin-top: 52px !important;
   }
+  .header-logo-container, .header-search-container, .header-upload-btn-container, .header-profile-btn-container {
+    align-self: flex-start;
+    padding-left: 8px;
+}
 
 }
 /*Styling for display on smaller screen ends here*/

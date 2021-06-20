@@ -3,7 +3,7 @@ import React, {Component, Fragment} from 'react';
 import './Checkout.css'
 
 //Header component Import
-// import Header from "../../common/header/Header";
+import Header from "../../common/header/Header";
 
 //Material-Ui Imports
 import Stepper from '@material-ui/core/Stepper';
@@ -35,8 +35,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import CloseIcon from '@material-ui/icons/Close';
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Grid from "@material-ui/core/Grid";
-//Router Import
-// import {Redirect} from 'react-router-dom';
+import * as Constants from "../../common/Constants";
 
 class Checkout extends Component {
     constructor() {
@@ -339,6 +338,14 @@ class Checkout extends Component {
         xhr.send(JSON.stringify(address));
     }
 
+  // Logout action from drop down menu on profile icon
+  loginredirect = () => {
+    sessionStorage.clear();
+    this.props.history.push({
+      pathname: "/"
+    });
+  }
+
   /**
    * This function connects to the API server to place the order.
    */
@@ -408,7 +415,7 @@ class Checkout extends Component {
         //     return <Redirect to='/'/>
         // }
         return <Fragment>
-            {/* <Header baseUrl={this.props.baseUrl}></Header> */}
+            <Header logoutHandler={this.loginredirect} baseUrl= {Constants.API_BASE_URL}/>
             <div className='main-container'>
                 <div className='delivery-payment-section'>
                     <Stepper activeStep={this.state.activeStep} orientation='vertical'>

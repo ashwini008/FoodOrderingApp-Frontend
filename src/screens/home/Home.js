@@ -51,8 +51,6 @@ class Home extends Component {
     let resourcePath = "restaurant/name/" + restaurantName;
     let xhr = new XMLHttpRequest();
     let that = this;
-
-    console.log("baseurl : " + 'http://localhost:8080/api' + resourcePath);
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4 && !!this.responseText && JSON.parse(this.responseText).restaurants !== null) {
           that.setState({
