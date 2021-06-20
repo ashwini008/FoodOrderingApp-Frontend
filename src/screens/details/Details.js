@@ -23,7 +23,7 @@ const Details = props => {
         }
       }, err => console.error(err))
       .catch(err => console.error(err));
-  }, []);
+  }, [props.match.params.id]);
   
   const addToCart = (data) => {
     const cartDataIndex = cartData.findIndex((item) => item.id === data.id);
@@ -69,6 +69,8 @@ const Details = props => {
       toggleNotification(true);
     } else {
       localStorage.cartData = JSON.stringify(cartData);
+      localStorage.restaurantDetails = JSON.stringify(restaurantDetails);
+      
       props.history.push('/checkout');
     }
   }

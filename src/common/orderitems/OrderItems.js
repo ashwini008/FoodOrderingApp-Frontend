@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react'
 //Stylesheet imports
 import '../../../node_modules/font-awesome/css/font-awesome.min.css';
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './OrderItems.css'
 //Material UI imports
 import Typography from "@material-ui/core/Typography";
@@ -10,6 +11,8 @@ import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
 
 export default function OrderItems(props) {
+    let totalAmount = 0;
+    this.props.orderitems.map.forEach(item => totalAmount += item.qty * item.price);
     return (
         <Fragment>
             {(props.orderitems.items || []).map((item, index) => (
@@ -25,13 +28,16 @@ export default function OrderItems(props) {
                     </Grid>
                     <Grid item xs={2}>
                         <Typography color='textSecondary'>
-                            {item.quantity}
+                            {item.qty}
                         </Typography>
                     </Grid>
                     <Grid item xs={3}>
                         <Typography color='textSecondary'>
                             <i className="fa fa-inr" aria-hidden="true"></i>
-                            {item.priceForAll.toLocaleString(undefined, {minimumFractionDigits: 2})}
+                            {/* {item.priceForAll.toLocaleString(undefined, {minimumFractionDigits: 2})} */}
+                            {parseFloat(item.price * item.qty).toFixed(2)}
+                            
+
                         </Typography>
                     </Grid>
                 </Grid>
@@ -50,7 +56,8 @@ export default function OrderItems(props) {
                             <i className="fa fa-inr" aria-hidden="true"></i>
                         </Typography>
                         <Typography style={{marginRight: 10}} color='textPrimary'>
-                            {Number(props.total).toLocaleString(undefined, {minimumFractionDigits: 2})}
+                            {/* {Number(props.total).toLocaleString(undefined, {minimumFractionDigits: 2})} */}
+                            {parseFloat(totalAmount).toFixed(2)}
                         </Typography>
                     </div>
                 </Grid>

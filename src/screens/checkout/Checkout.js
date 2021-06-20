@@ -36,7 +36,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Grid from "@material-ui/core/Grid";
 //Router Import
-import {Redirect} from 'react-router-dom';
+// import {Redirect} from 'react-router-dom';
 
 class Checkout extends Component {
     constructor() {
@@ -64,11 +64,13 @@ class Checkout extends Component {
             placeOrderMessage: undefined,
             placeOrderMessageOpen: false,
             couponId: undefined,
+            restaurantDetails: JSON.parse(localStorage.restaurantDetails),
+            cartData: JSON.parse(localStorage.cartData),
         }
     }
 
     componentDidMount() {
-        if (this.props.location.state !== undefined && sessionStorage.getItem('access-token') !== null) {
+        if (this.props.location.state !== '' && sessionStorage.getItem('access-token') !== null) {
             this.fetchAddress();
             this.fetchStates();
             this.fetchPayments();
@@ -79,261 +81,261 @@ class Checkout extends Component {
     /**
      * This function is used for stepper to move ahead based on user actions.
      */
-     incrementActiveStep = () => {
-      if (this.state.activeStep === 0 && this.state.selectedAddressId === undefined) {
-          //Do nothing as it is mandatory to select an address
-      } else if (this.state.activeStep === 1 && this.state.paymentId === '') {
-          //Do nothing, Because user has to select payment to proceed further.
-      } else {
+    incrementActiveStep = () => {
+    if (this.state.activeStep === 0 && this.state.selectedAddressId === undefined) {
+        //Do nothing as it is mandatory to select an address
+    } else if (this.state.activeStep === 1 && this.state.paymentId === '') {
+        //Do nothing, Because user has to select payment to proceed further.
+    } else {
 
-          let activeState = this.state.activeStep + 1;
-          let changeAddressPayment = 'display-none';
-          if (activeState === 2) {
-              changeAddressPayment = 'display-block';
-          }
-          this.setState({activeStep: activeState, displayChange: changeAddressPayment})
-      }
-  }
+        let activeState = this.state.activeStep + 1;
+        let changeAddressPayment = 'display-none';
+        if (activeState === 2) {
+            changeAddressPayment = 'display-block';
+        }
+        this.setState({activeStep: activeState, displayChange: changeAddressPayment})
+        }
+    }
 
-  /**
-   * This function is used for stepper to move backwards based on user actions.
-   */
-  decrementActiveStep = () => {
-      let activeState = this.state.activeStep - 1;
-      this.setState({activeStep: activeState})
-  }
+    /**
+     * This function is used for stepper to move backwards based on user actions.
+     */
+    decrementActiveStep = () => {
+        let activeState = this.state.activeStep - 1;
+        this.setState({activeStep: activeState})
+    }
 
-  /**
-   * This function is used for stepper reset to first step when user wants to change the order.
-   */
-  resetActiveStep = () => {
-      this.setState({activeStep: 0, displayChange: 'display-none'})
-  }
-  changeActiveTab = (value) => {
-      this.setState({activeTabValue: value})
-      if (value === 'existing_address') {
-          this.fetchAddress();
-      }
-  }
+    /**
+     * This function is used for stepper reset to first step when user wants to change the order.
+     */
+    resetActiveStep = () => {
+        this.setState({activeStep: 0, displayChange: 'display-none'})
+    }
+    changeActiveTab = (value) => {
+        this.setState({activeTabValue: value})
+        if (value === 'existing_address') {
+            this.fetchAddress();
+        }
+    }
 
-  /**
-   * This function is used when a user clicks on one address tile to select the address.
-   */
-  selectAddress = (e) => {
-      let elementId = e.target.id;
-      if (elementId.startsWith('select-address-icon-')) {
-          this.setState({selectedAddressId: elementId.split('select-address-icon-')[1]});
-      }
-      if (elementId.startsWith('select-address-button-')) {
-          this.setState({selectedAddressId: elementId.split('select-address-button-')[1]})
-      }
-  }
+    /**
+     * This function is used when a user clicks on one address tile to select the address.
+     */
+    selectAddress = (e) => {
+        let elementId = e.target.id;
+        if (elementId.startsWith('select-address-icon-')) {
+            this.setState({selectedAddressId: elementId.split('select-address-icon-')[1]});
+        }
+        if (elementId.startsWith('select-address-button-')) {
+            this.setState({selectedAddressId: elementId.split('select-address-button-')[1]})
+        }
+    }
 
-  /**
-   * This function is common for all the input changes of the new address form.
-   */
-  onInputFieldChangeHandler = (e) => {
-      let stateKey = e.target.id;
-      let stateValue = e.target.value;
-      //Material UI Select doesn't return key
-      if (stateKey === undefined) {
-          stateKey = 'stateUUID';
-      }
-      //Form validation.
-      let stateValueRequiredKey = stateKey + 'Required';
-      let stateKeyRequiredValue = false;
-      if (stateValue === '') {
-          stateKeyRequiredValue = true;
-      }
-      let validPincode = this.state.pincodeValid;
-      if (stateKey === 'pincode') {
-          validPincode = this.validatePincode(stateValue);
-      }
-      this.setState({
-          [stateKey]: stateValue,
-          [stateValueRequiredKey]: stateKeyRequiredValue,
-          'pincodeValid': validPincode
-      });
-  }
+    /**
+     * This function is common for all the input changes of the new address form.
+     */
+    onInputFieldChangeHandler = (e) => {
+        let stateKey = e.target.id;
+        let stateValue = e.target.value;
+        //Material UI Select doesn't return key
+        if (stateKey === undefined) {
+            stateKey = 'stateUUID';
+        }
+        //Form validation.
+        let stateValueRequiredKey = stateKey + 'Required';
+        let stateKeyRequiredValue = false;
+        if (stateValue === '') {
+            stateKeyRequiredValue = true;
+        }
+        let validPincode = this.state.pincodeValid;
+        if (stateKey === 'pincode') {
+            validPincode = this.validatePincode(stateValue);
+        }
+        this.setState({
+            [stateKey]: stateValue,
+            [stateValueRequiredKey]: stateKeyRequiredValue,
+            'pincodeValid': validPincode
+        });
+    }
 
-  /**
-   * This function is used to validate the pincode.
-   */
-  validatePincode = (pincode) => {
-      if (pincode !== undefined && pincode.length !== 6) {
-          return false;
-      } else if (!isNaN(pincode) && pincode.length === 6) {
-          return true;
-      } else {
-          return false;
-      }
-  }
+    /**
+     * This function is used to validate the pincode.
+     */
+    validatePincode = (pincode) => {
+        if (pincode !== undefined && pincode.length !== 6) {
+            return false;
+        } else if (!isNaN(pincode) && pincode.length === 6) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-  /**
-   * This function is used in step 2 of the stepper when a user selects the payment mode.
-   */
-  onPaymentSelection = (e) => {
-      this.setState({'paymentId': e.target.value});
-  }
+    /**
+     * This function is used in step 2 of the stepper when a user selects the payment mode.
+     */
+    onPaymentSelection = (e) => {
+        this.setState({'paymentId': e.target.value});
+    }
 
-  /**
-   * This function closes the snackbar that displays order success or failure message.
-   */
-  placeOrderMessageClose = () => {
-      this.setState({placeOrderMessageOpen: false});
-  }
+    /**
+     * This function closes the snackbar that displays order success or failure message.
+     */
+    placeOrderMessageClose = () => {
+        this.setState({placeOrderMessageOpen: false});
+    }
 
-  /**
-   * This function connects to the API server to fetch the addresses.
-   */
-  fetchAddress = () => {
-      let token = sessionStorage.getItem('access-token');
+    /**
+     * This function connects to the API server to fetch the addresses.
+     */
+    fetchAddress = () => {
+        let token = sessionStorage.getItem('access-token');
 
-      let xhr = new XMLHttpRequest();
+        let xhr = new XMLHttpRequest();
 
-      let that = this;
+        let that = this;
 
-      xhr.addEventListener("readystatechange", function () {
-          if (this.readyState === 4) {
-              that.setState({addresses: JSON.parse(this.responseText).addresses});
-          }
-      });
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                that.setState({addresses: JSON.parse(this.responseText).addresses});
+            }
+        });
 
-      let url = this.props.baseUrl + 'address/customer';
+        let url = this.props.baseUrl + 'address/customer';
 
-      xhr.open('GET', url);
+        xhr.open('GET', url);
 
-      xhr.setRequestHeader('authorization', 'Bearer ' + token);
-      xhr.setRequestHeader("Cache-Control", "no-cache");
+        xhr.setRequestHeader('authorization', 'Bearer ' + token);
+        xhr.setRequestHeader("Cache-Control", "no-cache");
 
-      xhr.send();
-  }
+        xhr.send();
+    }
 
-  /**
-   * This function connects to the API server to fetch the states.
-   */
-  fetchStates = () => {
+    /**
+     * This function connects to the API server to fetch the states.
+     */
+    fetchStates = () => {
 
-      let xhr = new XMLHttpRequest();
+        let xhr = new XMLHttpRequest();
 
-      let that = this;
+        let that = this;
 
-      xhr.addEventListener("readystatechange", function () {
-          if (this.readyState === 4) {
-              that.setState({states: JSON.parse(this.responseText).states});
-          }
-      });
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                that.setState({states: JSON.parse(this.responseText).states});
+            }
+        });
 
-      let url = this.props.baseUrl + 'states/';
+        let url = this.props.baseUrl + 'states/';
 
-      xhr.open('GET', url);
+        xhr.open('GET', url);
 
-      xhr.setRequestHeader("Cache-Control", "no-cache");
+        xhr.setRequestHeader("Cache-Control", "no-cache");
 
-      xhr.send();
-  }
+        xhr.send();
+    }
 
-  /**
-   * This function connects to the API server to fetch the payments.
-   */
-  fetchPayments = () => {
+    /**
+     * This function connects to the API server to fetch the payments.
+     */
+    fetchPayments = () => {
 
-      let xhr = new XMLHttpRequest();
+        let xhr = new XMLHttpRequest();
 
-      let that = this;
+        let that = this;
 
-      xhr.addEventListener("readystatechange", function () {
-          if (this.readyState === 4) {
-              that.setState({payments: JSON.parse(this.responseText).paymentMethods});
-          }
-      });
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                that.setState({payments: JSON.parse(this.responseText).paymentMethods});
+            }
+        });
 
-      let url = this.props.baseUrl + 'payment';
+        let url = this.props.baseUrl + 'payment';
 
-      xhr.open('GET', url);
+        xhr.open('GET', url);
 
-      xhr.setRequestHeader("Cache-Control", "no-cache");
+        xhr.setRequestHeader("Cache-Control", "no-cache");
 
-      xhr.send();
-  }
+        xhr.send();
+    }
 
-  /**
-   * This function connects to the API server to save the address.
-   */
-  saveAddress = () => {
-      let tempCityRequired = false;
-      let tempPincodeRequired = false;
-      let tempFlatRequired = false;
-      let tempStateRequired = false;
-      let tempLocalityRequired = false;
-      if (this.state.city === '' || this.state.cityRequired) {
-          tempCityRequired = true;
-      }
+    /**
+     * This function connects to the API server to save the address.
+     */
+    saveAddress = () => {
+        let tempCityRequired = false;
+        let tempPincodeRequired = false;
+        let tempFlatRequired = false;
+        let tempStateRequired = false;
+        let tempLocalityRequired = false;
+        if (this.state.city === '' || this.state.cityRequired) {
+            tempCityRequired = true;
+        }
 
-      if (this.state.locality === '' || this.state.localityRequired) {
-          tempLocalityRequired = true;
-      }
+        if (this.state.locality === '' || this.state.localityRequired) {
+            tempLocalityRequired = true;
+        }
 
-      if (this.state.flat === '' || this.state.flatRequired) {
-          tempFlatRequired = true;
-      }
+        if (this.state.flat === '' || this.state.flatRequired) {
+            tempFlatRequired = true;
+        }
 
-      if (this.state.stateUUID === '' || this.state.stateUUIDRequired) {
-          tempStateRequired = true;
-      }
+        if (this.state.stateUUID === '' || this.state.stateUUIDRequired) {
+            tempStateRequired = true;
+        }
 
-      if (this.state.pincode === '' || this.state.pincodeRequired) {
-          tempPincodeRequired = true;
-      }
+        if (this.state.pincode === '' || this.state.pincodeRequired) {
+            tempPincodeRequired = true;
+        }
 
-      if (tempFlatRequired || tempPincodeRequired || tempStateRequired || tempLocalityRequired || tempCityRequired) {
-          this.setState({
-              flatRequired: tempFlatRequired,
-              localityRequired: tempLocalityRequired,
-              cityRequired: tempCityRequired,
-              stateUUIDRequired: tempStateRequired,
-              pincodeRequired: tempPincodeRequired
-          })
-          return;
-      }
+        if (tempFlatRequired || tempPincodeRequired || tempStateRequired || tempLocalityRequired || tempCityRequired) {
+            this.setState({
+                flatRequired: tempFlatRequired,
+                localityRequired: tempLocalityRequired,
+                cityRequired: tempCityRequired,
+                stateUUIDRequired: tempStateRequired,
+                pincodeRequired: tempPincodeRequired
+            })
+            return;
+        }
 
-      let address = {
-          city: this.state.city,
-          flat_building_name: this.state.flat,
-          locality: this.state.locality,
-          pincode: this.state.pincode,
-          state_uuid: this.state.stateUUID
-      }
+        let address = {
+            city: this.state.city,
+            flat_building_name: this.state.flat,
+            locality: this.state.locality,
+            pincode: this.state.pincode,
+            state_uuid: this.state.stateUUID
+        }
 
-      let token = sessionStorage.getItem('access-token');
+        let token = sessionStorage.getItem('access-token');
 
-      let xhr = new XMLHttpRequest();
+        let xhr = new XMLHttpRequest();
 
-      let that = this;
+        let that = this;
 
-      xhr.addEventListener("readystatechange", function () {
-          if (this.readyState === 4) {
-              that.setState({
-                  addresses: JSON.parse(this.responseText).addresses,
-                  city: '',
-                  locality: '',
-                  flat: '',
-                  stateUUID: '',
-                  pincode: ''
-              });
-          }
-      });
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                that.setState({
+                    addresses: JSON.parse(this.responseText).addresses,
+                    city: '',
+                    locality: '',
+                    flat: '',
+                    stateUUID: '',
+                    pincode: ''
+                });
+            }
+        });
 
-      let url = this.props.baseUrl + 'address/';
+        let url = this.props.baseUrl + 'address/';
 
-      xhr.open('POST', url);
+        xhr.open('POST', url);
 
-      xhr.setRequestHeader('authorization', 'Bearer ' + token);
-      xhr.setRequestHeader("Cache-Control", "no-cache");
-      xhr.setRequestHeader('content-type', 'application/json');
+        xhr.setRequestHeader('authorization', 'Bearer ' + token);
+        xhr.setRequestHeader("Cache-Control", "no-cache");
+        xhr.setRequestHeader('content-type', 'application/json');
 
-      xhr.send(JSON.stringify(address));
-  }
+        xhr.send(JSON.stringify(address));
+    }
 
   /**
    * This function connects to the API server to place the order.
@@ -357,6 +359,7 @@ class Checkout extends Component {
           item_quantities: itemQuantities,
           payment_id: this.state.paymentId,
           restaurant_id: this.props.location.state.orderItems.id,
+          
           bill: bill,
           discount: 0
       }
@@ -398,9 +401,9 @@ class Checkout extends Component {
   }
 
     render() {
-        if (this.props.location.state === undefined || sessionStorage.getItem('access-token') === null) {
-            return <Redirect to='/'/>
-        }
+        // if (this.props.location.state === '' || sessionStorage.getItem('access-token') === null) {
+        //     return <Redirect to='/'/>
+        // }
         return <Fragment>
             <Header baseUrl={this.props.baseUrl}></Header>
             <div className='main-container'>
@@ -565,9 +568,10 @@ class Checkout extends Component {
                             <br/>
                             <Typography variant='h6' component='h3' color='textSecondary'
                                         style={{textTransform: "capitalize", marginBottom: 15}}>
-                                {this.props.location.state.restaurantName}
+                                {/* {this.props.location.state.restaurantDetails.restaurantName} */}
+                                {this.state.restaurantDetails?.restaurantName}
                             </Typography>
-                            <OrderItems divider='true' orderitems={this.props.location.state.orderItems}
+                            <OrderItems divider='true' orderitems={JSON.parse(localStorage.cartData)}
                                         total={this.props.location.state.total} placeOrder={this.placeOrder}/>
                         </CardContent>
                     </Card>
@@ -580,7 +584,7 @@ class Checkout extends Component {
                           onClose={this.placeOrderMessageClose}
                           autoHideDuration={6000}
                           action={<Fragment> <IconButton color='inherit'
-                                                         onClick={this.placeOrderMessageClose}><CloseIcon/></IconButton></Fragment>}/>
+                          onClick={this.placeOrderMessageClose}><CloseIcon/></IconButton></Fragment>}/>
             </div>
         </Fragment>
     }
