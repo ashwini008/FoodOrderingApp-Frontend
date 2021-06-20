@@ -87,7 +87,7 @@ width:8px !important;
 }
 
 /*Styling for display on smaller screen*/
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 767px) {
   .header-main-container {
     background-color: #263238;
     display: flex;
@@ -102,7 +102,11 @@ width:8px !important;
   .header-logo-container, .header-search-container, .header-upload-btn-container, .header-profile-btn-container {
     align-self: flex-start;
     padding-left: 8px;
-}
+  }
+  .search-icon {
+    padding: 0 0px;
+    align-self: center;
+  }
 
 }
 /*Styling for display on smaller screen ends here*/
