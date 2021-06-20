@@ -118,7 +118,7 @@ class Home extends Component {
           justify="flex-start"
           alignItems="center"
           spacing={16}
-          className="grid-container home-grid"
+          className="grid-container"
         >
           {this.state.restaurants.map(restaurant => (
             <Grid item lg={3} sm={6} key={"filtered" + restaurant.id}>

@@ -32,7 +32,7 @@
   }
 }
 @media screen  and (max-width:570px){
-  .home-grid {
+  .grid-container {
     justify-content: center;
   }
 }
