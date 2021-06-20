@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react'
 //Stylesheet imports
-import '../../../node_modules/font-awesome/css/font-awesome.min.css';
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './OrderItems.css'
 //Material UI imports
 import Typography from "@material-ui/core/Typography";
@@ -18,8 +18,8 @@ export default function OrderItems(props) {
             {(props.orderitems || []).map((item, index) => (
                 <Grid key={item.id} container>
                     <Grid item xs={1}>
-                        <i className="fa fa-stop-circle-o icon-type" aria-hidden="true"
-                           style={item.type === 'VEG' ? {color: "green"} : {color: "red"}}/>
+                        
+                        <FontAwesomeIcon icon={["far", "stop-circle"]} className={item.type === 'VEG'?{color:"green"} : {color: "red"}} />
                     </Grid>
                     <Grid item xs={6}>
                         <Typography color='textSecondary' style={{textTransform: "capitalize"}}>
@@ -33,7 +33,7 @@ export default function OrderItems(props) {
                     </Grid>
                     <Grid item xs={3}>
                         <Typography color='textSecondary'>
-                            <i className="fa fa-inr" aria-hidden="true"></i>
+                            <FontAwesomeIcon icon="rupee-sign" className="icon" size="xs" />
                             {/* {item.priceForAll.toLocaleString(undefined, {minimumFractionDigits: 2})} */}
                             {parseFloat(item.price * item.qty).toFixed(2)}
                             
@@ -53,7 +53,7 @@ export default function OrderItems(props) {
                 <Grid item xs={3}>
                     <div className='payable-bill-amount'>
                         <Typography color='textSecondary'>
-                            <i className="fa fa-inr" aria-hidden="true"></i>
+                            <FontAwesomeIcon icon="rupee-sign" className="icon" size="xs" />
                         </Typography>
                         <Typography style={{marginRight: 10}} color='textPrimary'>
                             {/* {Number(props.total).toLocaleString(undefined, {minimumFractionDigits: 2})} */}
