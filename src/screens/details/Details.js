@@ -4,7 +4,8 @@ import { Badge, Button, Card, Divider, Grid, IconButton, Snackbar, Typography } 
 import { Add, Close, Remove, ShoppingCart } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import './Details.css';
-
+import * as Constants from "../../common/Constants";
+import Header from "../../common/header/Header";
 const Details = props => {
 
   const [restaurantDetails, setDetails] = useState({});
@@ -72,11 +73,21 @@ const Details = props => {
       props.history.push('/checkout');
     }
   }
+    
+  // Logout action from drop down menu on profile icon
+  const loginredirect = () => {
+      sessionStorage.clear();
+      props.history.push({
+        pathname: "/"
+      });
+  }
 
   let totalAmount = 0;
   cartData.forEach(item => totalAmount += item.qty * item.price);
+  
   return (
     <>
+      <Header logoutHandler={loginredirect} baseUrl= {Constants.API_BASE_URL}/>
       <Grid container className="restaurant-info">
         <Grid item md={3} sm={12} xs={12}>
           <img src={restaurantDetails.photo_URL} alt="restaurant-img" />
