@@ -12,10 +12,10 @@ import Grid from "@material-ui/core/Grid";
 
 export default function OrderItems(props) {
     let totalAmount = 0;
-    this.props.orderitems.map.forEach(item => totalAmount += item.qty * item.price);
+    props.orderitems.forEach(item => totalAmount += item.qty * item.price);
     return (
         <Fragment>
-            {(props.orderitems.items || []).map((item, index) => (
+            {(props.orderitems || []).map((item, index) => (
                 <Grid key={item.id} container>
                     <Grid item xs={1}>
                         <i className="fa fa-stop-circle-o icon-type" aria-hidden="true"
@@ -23,7 +23,7 @@ export default function OrderItems(props) {
                     </Grid>
                     <Grid item xs={6}>
                         <Typography color='textSecondary' style={{textTransform: "capitalize"}}>
-                            {item.name}
+                            {item.item_name}
                         </Typography>
                     </Grid>
                     <Grid item xs={2}>
