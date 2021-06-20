@@ -52,15 +52,15 @@ class Home extends Component {
     let xhr = new XMLHttpRequest();
     let that = this;
     xhr.addEventListener("readystatechange", function () {
-        if (this.readyState === 4 && !!this.responseText && JSON.parse(this.responseText).restaurants !== null) {
-          that.setState({
-            restaurants: JSON.parse(this.responseText).restaurants
-          });
-        } else {
-          console.log("No Restaurant");
-          that.setState({ errorResponse: this.responseText, restaurants: [] });
-          console.log(this.responseText);
-        }
+      if (this.readyState === 4 && !!this.responseText && JSON.parse(this.responseText).restaurants !== null) {
+        that.setState({
+          restaurants: JSON.parse(this.responseText).restaurants
+        });
+      } else {
+        console.log("No Restaurant");
+        that.setState({ errorResponse: this.responseText, restaurants: [] });
+        console.log(this.responseText);
+      }
     });
 
     xhr.open("GET", Constants.API_BASE_URL + resourcePath);
@@ -94,7 +94,14 @@ class Home extends Component {
       pathname: "/restaurant/" + restaurantID
     });
   };
-
+  //Logout action from drop down menu on profile icon
+  loginredirect = () => {
+    sessionStorage.clear();
+    this.props.history.push({
+      pathname: "/"
+    });
+    window.location.reload();
+  }
   render() {
     const classes = this.props.classes;
     return (
