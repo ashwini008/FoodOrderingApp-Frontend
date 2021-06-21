@@ -15,7 +15,7 @@ const Details = props => {
 
   useEffect(() => {
     // fetch restaurant details
-    fetch(`http://localhost:8080/api/restaurant/${props.match.params.id}`)
+    fetch(`${Constants.API_BASE_URL}restaurant/${props.match.params.id}`)
       .then(rsp => {
         if (rsp.status === 200) {
           rsp.json().then(res => {

@@ -21,6 +21,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Menu from '@material-ui/core/Menu';
 import {debounce } from 'lodash';
+import { API_BASE_URL } from "../Constants";
 
 const customStyles = {
   content: {
@@ -167,7 +168,7 @@ class Header extends Component {
         }
       }
     })
-    xhrLogin.open("POST", "http://localhost:8080/api/customer/login");
+    xhrLogin.open("POST", `${API_BASE_URL}customer/login`);
     xhrLogin.setRequestHeader("authorization", "Basic " + window.btoa(this.state.username + ":" + this.state.password));
     xhrLogin.setRequestHeader("Content-Type", "application/json");
     xhrLogin.setRequestHeader("Cache-Control", "no-cache");
@@ -217,7 +218,7 @@ class Header extends Component {
       }
     })
 
-    xhrSignup.open("POST", "http://localhost:8080/api/customer/signup");
+    xhrSignup.open("POST", `${API_BASE_URL}customer/signup`);
     xhrSignup.setRequestHeader("Content-Type", "application/json");
     xhrSignup.setRequestHeader("Cache-Control", "no-cache");
     xhrSignup.setRequestHeader("Access-Control-Allow-Origin", "*");

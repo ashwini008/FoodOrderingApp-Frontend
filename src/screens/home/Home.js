@@ -57,9 +57,7 @@ class Home extends Component {
           restaurants: JSON.parse(this.responseText).restaurants
         });
       } else {
-        console.log("No Restaurant");
         that.setState({ errorResponse: this.responseText, restaurants: [] });
-        console.log(this.responseText);
       }
     });
 
@@ -117,7 +115,6 @@ class Home extends Component {
           direction="row"
           justify="flex-start"
           alignItems="center"
-          spacing={16}
           className="grid-container"
         >
           {this.state.restaurants.map(restaurant => (

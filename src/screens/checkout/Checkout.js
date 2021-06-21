@@ -123,7 +123,6 @@ class Checkout extends Component {
    * This function is used when a user clicks on one address tile to select the address.
    */
   onAddressClick=(address)=>{
-    console.log(address);
     if(address.id===this.state.selected){
       sessionStorage.setItem("selected",null);
       sessionStorage.setItem("selAddress",null);
@@ -214,7 +213,7 @@ class Checkout extends Component {
       }
     });
 
-    let url = 'http://localhost:8080/api/address/customer';
+    let url = `${Constants.API_BASE_URL}address/customer`;
 
     xhr.open('GET', url);
 
@@ -239,7 +238,7 @@ class Checkout extends Component {
       }
     });
 
-    let url = 'http://localhost:8080/api/states';
+    let url = `${Constants.API_BASE_URL}states`;
 
     xhr.open('GET', url);
 
@@ -263,7 +262,7 @@ class Checkout extends Component {
       }
     });
 
-    let url = 'http://localhost:8080/api/payment';
+    let url = `${Constants.API_BASE_URL}payment`;
 
     xhr.open('GET', url);
 
@@ -339,7 +338,7 @@ class Checkout extends Component {
       }
     });
 
-    let url = 'http://localhost:8080/api/address';
+    let url = `${Constants.API_BASE_URL}address`;
 
     xhr.open('POST', url);
 
@@ -411,7 +410,7 @@ class Checkout extends Component {
     }
     );
 
-    let url = 'http://localhost:8080/api/order';
+    let url = `${Constants.API_BASE_URL}order`;
 
     xhr.open('POST', url);
 
