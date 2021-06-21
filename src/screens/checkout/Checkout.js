@@ -422,9 +422,6 @@ class Checkout extends Component {
   }
 
   render() {
-    // if (this.props.location.state === '' || sessionStorage.getItem('access-token') === null) {
-    //     return <Redirect to='/'/>
-    // }
     return <Fragment>
       <Header logoutHandler={this.loginredirect} baseUrl={Constants.API_BASE_URL} />
       <div className='main-container'>
@@ -584,7 +581,6 @@ class Checkout extends Component {
               <br />
               <Typography variant='h6' component='h3' color='textSecondary'
                 style={{ textTransform: "capitalize", marginBottom: 15 }}>
-                {/* {this.props.location.state.restaurantDetails.restaurantName} */}
                 {this.state.restaurantDetails?.restaurant_name}
               </Typography>
               {

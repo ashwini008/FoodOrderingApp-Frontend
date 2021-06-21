@@ -1,7 +1,6 @@
 import React, {Fragment} from 'react'
-//Stylesheet imports
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+//Stylesheet import
 import './OrderItems.css'
 //Material UI imports
 import Typography from "@material-ui/core/Typography";
@@ -34,7 +33,6 @@ export default function OrderItems(props) {
                     <Grid item xs={3}>
                         <Typography color='textSecondary'>
                             <FontAwesomeIcon icon="rupee-sign" className="icon" size="xs" />
-                            {/* {item.priceForAll.toLocaleString(undefined, {minimumFractionDigits: 2})} */}
                             {parseFloat(item.price * item.qty).toFixed(2)}
                             
 
@@ -56,7 +54,6 @@ export default function OrderItems(props) {
                             <FontAwesomeIcon icon="rupee-sign" className="icon" size="xs" />
                         </Typography>
                         <Typography style={{marginRight: 10}} color='textPrimary'>
-                            {/* {Number(props.total).toLocaleString(undefined, {minimumFractionDigits: 2})} */}
                             {parseFloat(totalAmount).toFixed(2)}
                         </Typography>
                     </div>

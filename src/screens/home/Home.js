@@ -68,7 +68,7 @@ class Home extends Component {
   }
 
   findAllRestaurant() {
-    let resourcePath = "/restaurant";
+    let resourcePath = "restaurant";
     let xhr = new XMLHttpRequest();
     let that = this;
     xhr.addEventListener("readystatechange", function () {
@@ -81,7 +81,7 @@ class Home extends Component {
       }
     });
 
-    xhr.open("GET", 'http://localhost:8080/api' + resourcePath);
+    xhr.open("GET", Constants.API_BASE_URL + resourcePath);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("Cache-Control", "no-cache");
     xhr.send();
@@ -145,7 +145,6 @@ class Home extends Component {
                 <CardActions className="action-container">
                   <div className="customer-rating">
                     <FontAwesomeIcon icon="star" size="xs" />
-                    {/* <i className="fa fa-star" aria-hidden="true" /> */}
                     <span>
                       {" "}
                       {restaurant.customer_rating} (
@@ -154,9 +153,7 @@ class Home extends Component {
                   </div>
                   <div className="customer-price">
                     <FontAwesomeIcon icon="rupee-sign" size="xs" />
-                    {/* <i className="fas fa-rupee-sign"> */}
                     <span> {restaurant.average_price} for two</span>{" "}
-                    {/* </i> */}
                   </div>
                 </CardActions>
               </Card>

@@ -97,7 +97,6 @@ class Header extends Component {
       snackBarText: "",
       menuIsOpen: false
     }
-    //will have to be replaced with the provided url
   }
 
   // Storing signup input field values in state for processing
